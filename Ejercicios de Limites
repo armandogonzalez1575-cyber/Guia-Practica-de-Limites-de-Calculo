@@ -1,0 +1,143 @@
+import React, { useEffect } from "react";
+import "katex/dist/katex.min.css";
+import katex from "katex";
+
+// Iconos SVG
+const Calculator = (props) => (
+  <svg {...props} xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeWidth="2">
+    <rect x="2" y="4" width="20" height="16" rx="2" ry="2"/>
+    <line x1="8" y1="12" x2="8" y2="12" />
+    <line x1="12" y1="12" x2="12" y2="12" />
+    <line x1="16" y1="12" x2="16" y2="12" />
+    <line x1="8" y1="16" x2="8" y2="16" />
+    <line x1="12" y1="16" x2="12" y2="16" />
+    <line x1="16" y1="16" x2="16" y2="16" />
+    <line x1="10" y1="8" x2="14" y2="8" />
+  </svg>
+);
+
+// 🔥 Componente que renderiza cualquier fórmula con KaTeX
+const Math = ({ tex }) => {
+  useEffect(() => {
+    const el = document.getElementById(tex);
+    if (el) katex.render(el.dataset.latex, el);
+  }, [tex]);
+
+  return (
+    <span
+      id={tex}
+      data-latex={tex}
+      className="math"
+    ></span>
+  );
+};
+
+const Navbar = () => (
+  <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-lg border-b border-indigo-200">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex justify-between h-16 items-center">
+        <span className="font-extrabold text-2xl text-slate-800">Ejercicios de <span className="text-indigo-600">Cálculo</span></span>
+
+        <div className="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
+          <a href="#ejercicio1" className="hover:text-indigo-600">Indeterminación 0/0</a>
+          <a href="#ejercicio2" className="hover:text-indigo-600">Límite al Infinito</a>
+          <a href="#ejercicio3" className="hover:text-indigo-600">Límites con Raíces</a>
+          <a href="#referencias" className="hover:text-indigo-600">Referencias</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+);
+
+const Hero = () => (
+  <header className="relative pt-20 pb-24 bg-indigo-700 text-white text-center">
+    <h1 className="text-5xl md:text-6xl font-extrabold">Guía Práctica: <span className="text-indigo-200">Límites</span></h1>
+    <p className="mt-4 text-xl text-indigo-200 max-w-3xl mx-auto">
+      Aquí se presenta la metodología paso a paso para resolver los límites más comunes.
+    </p>
+  </header>
+);
+
+const Ejercicio1 = () => (
+  <section id="ejercicio1" className="py-20 bg-white border-b border-slate-100">
+    <div className="max-w-4xl mx-auto px-4">
+      <h2 className="text-3xl font-bold text-slate-900 flex items-center gap-3">
+        <Calculator className="w-8 h-8 text-indigo-600" />
+        Ejercicio 1: Indeterminación 0/0
+      </h2>
+
+      <div className="mt-6 bg-slate-50 p-4 rounded-lg text-center text-xl font-serif">
+        <Math tex="\\lim_{x \\to 3} \\frac{x^2 - 9}{x - 3}" />
+      </div>
+
+      <p className="mt-4">
+        Al sustituir: <Math tex="3" /> → indeterminación <Math tex="0/0" />.  
+        Se factoriza: <Math tex="x^2 - 9 = (x - 3)(x + 3)" />  
+        Se cancela el factor: <Math tex="(x - 3)" />  
+        Finalmente: <Math tex="6" />
+      </p>
+    </div>
+  </section>
+);
+
+const Ejercicio2 = () => (
+  <section id="ejercicio2" className="py-20 bg-slate-100 border-t border-b border-slate-200">
+    <div className="max-w-4xl mx-auto px-4">
+      <h2 className="text-3xl font-bold text-slate-900 flex items-center gap-3">
+        Límite al Infinito
+      </h2>
+
+      <div className="mt-6 bg-white p-4 rounded-lg text-center text-xl font-serif">
+        <Math tex="\\lim_{x \\to \\infty} \\frac{2x^4 - 5x + 1}{7x^4 + 3x^2 - 10}" />
+      </div>
+
+      <p className="mt-4">
+        Ambos grados son 4 → límite = coeficientes principales:  
+        <Math tex="\\frac{2}{7}" />
+      </p>
+    </div>
+  </section>
+);
+
+const Ejercicio3 = () => (
+  <section id="ejercicio3" className="py-20 bg-white border-b border-slate-100">
+    <div className="max-w-4xl mx-auto px-4">
+      <h2 className="text-3xl font-bold text-slate-900">Límite con Raíces</h2>
+
+      <div className="mt-6 bg-slate-50 p-4 rounded-lg text-center text-xl font-serif">
+        <Math tex="\\lim_{x \\to 0} \\frac{\\sqrt{x+4} - 2}{x}" />
+      </div>
+
+      <p className="mt-4">
+        Forma <Math tex="0/0" />, se multiplica por el conjugado:  
+        <Math tex="\\sqrt{x+4} + 2" />  
+        Resultado final: <Math tex="\\frac{1}{4}" />
+      </p>
+    </div>
+  </section>
+);
+
+const Footer = () => (
+  <footer id="referencias" className="bg-slate-800 text-slate-400 py-12">
+    <div className="max-w-4xl mx-auto px-4">
+      <h2 className="text-xl font-bold mb-6 text-white">Referencias</h2>
+      <ul className="text-sm space-y-3">
+        <li>[1] Stewart — *Cálculo de una variable*.</li>
+        <li>[2] Thomas — *Cálculo y geometría analítica*.</li>
+      </ul>
+    </div>
+  </footer>
+);
+
+const App = () => (
+  <div className="min-h-screen">
+    <Navbar />
+    <Hero />
+    <Ejercicio1 />
+    <Ejercicio2 />
+    <Ejercicio3 />
+    <Footer />
+  </div>
+);
+
+export default App;
